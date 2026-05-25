@@ -1,0 +1,14 @@
+node_modules
+.next
+out
+dist
+.env
+.env.local
+.DS_Store
+*.log
+playwright-report
+test-results
+.claude/settings.local.json
+coverage
+tests/e2e/.auth/
+docker-compose.override.yml
