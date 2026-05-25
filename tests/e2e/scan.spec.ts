@@ -22,6 +22,19 @@ const adminStorageState = join(
   "admin.json",
 );
 
+// Camera-based scanner can't be reliably driven in headless e2e. Force the
+// manual-fallback UI by making navigator.mediaDevices look unsupported before
+// the page loads. The fallback DOM is identical to the pre-camera version of
+// /scan, so the existing assertions still hold.
+test.beforeEach(async ({ context }) => {
+  await context.addInitScript(() => {
+    Object.defineProperty(navigator, "mediaDevices", {
+      configurable: true,
+      get: () => undefined,
+    });
+  });
+});
+
 test.describe.serial("scan happy path", () => {
   test("scan page renders", async ({ page }) => {
     await page.goto("/scan");
